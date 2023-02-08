@@ -1,0 +1,28 @@
+{
+    "links": [
+        {
+            "url": "https://www.sarenza.com/store/product/gender-type/list/view?gender=1&type=76&index=100&count=3000",
+            "name": "Baskets"
+        },
+        {
+            "url": "https://www.sarenza.com/store/product/gender-search/list/view?gender=1&search=derby&sort=newest&index=100&count=3000",
+            "name": "Derbies"
+        },
+        {
+            "url": "https://www.sarenza.com/store/product/gender-type/list/view?gender=1&type=84&index=100&count=30000",
+            "name": "Mules et sabots"
+        },
+        {
+            "url": "https://www.sarenza.com/store/product/gender-type/list/view?gender=1&type=75&index=100&count=3000",
+            "name": "Sandales et nu-pieds"
+        },
+        {
+            "url": "https://www.sarenza.com/store/product/gender-type/list/view?gender=1&type=79&index=100&count=3000",
+            "name": "Espadrilles"
+        },
+        {
+            "url": "https://www.sarenza.com/store/product/gender-type/list/view?gender=1&type=10&index=100&count=3000",
+            "name": "Chaussons"
+        }
+    ]
+}
