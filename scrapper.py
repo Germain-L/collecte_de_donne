@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -8,9 +9,11 @@ with open('config.json') as json_data_file:
     config = json.load(json_data_file)
 
 # Create a new instance of the Firefox driver
+options = Options()
+options.headless = True
 
 for link in config['links']:
-    driver = webdriver.Firefox()
+    driver = webdriver.Firefox(options=options)
     print('Scraping ' + link['name'] + '...')
 
     # Navigate to the page
@@ -28,6 +31,7 @@ for link in config['links']:
     if not os.path.exists(folder):
         os.makedirs(folder)
 
+    print("Downloading " + str(len(images)) + " images")
     # Loop through the images and download them
     num = 0
     for image in images:
