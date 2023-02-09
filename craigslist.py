@@ -7,15 +7,15 @@ from selenium.webdriver.support import expected_conditions as EC
 # Use Selenium to load the HTML content
 driver = webdriver.Firefox()
 
-columns = ["make model", "odometer", "drive", "transmission", "paint color", "size", "type", "fuel", "title_status", "condition", "cylinders"]
+columns = ["make_model", "odometer", "drive", "transmission", "paint color", "size", "type", "fuel", "title_status", "condition", "cylinders"]
 
-head = "make model,odometer,drive,transmission,paint color,size,type,fuel,title_status,condition,cylinders\n"
+head = "make_model,odometer,drive,transmission,paint color,size,type,fuel,title_status,condition,cylinders"
 print(head)
 keys = []
 
 
 data = []
-for i in range(0, 3):
+for i in range(0, 5):
     url = f"https://boston.craigslist.org/search/boston-ma/cta#search=1~gallery~{i}~0"
     driver.get(url)
 
@@ -45,7 +45,7 @@ for i in range(0, 3):
     done = []
 
     # Only keep the some of the href values to speed up the process
-    href_list = href_list[5:15]
+    href_list = href_list[:15]
 
     for href in href_list:
         if href in done:
@@ -88,12 +88,14 @@ for i in range(0, 3):
                 pass
         
         line = ""
-        # add the name of the car
-        line += name + ","
+
+        attributes["make_model"] = name
+
         for col in columns:
             if col in attributes:
-                line += attributes[col]
-            line += ","
+                line += attributes[col] + ","
+            else:
+                line += '"",'
         
         print(line)
 
