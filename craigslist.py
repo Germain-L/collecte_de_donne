@@ -1,4 +1,3 @@
-import json
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -8,9 +7,17 @@ from selenium.webdriver.support import expected_conditions as EC
 # Use Selenium to load the HTML content
 driver = webdriver.Firefox()
 
+columns = ["make model", "odometer", "drive", "transmission", "paint color", "size", "type", "fuel", "title_status", "condition", "cylinders"]
+
+head = "make model,odometer,drive,transmission,paint color,size,type,fuel,title_status,condition,cylinders\n"
+print(head)
+keys = []
+
+
 data = []
-for i in range(1, 10):
-    driver.get(f"https://boston.craigslist.org/search/boston-ma/cta#search=1~gallery~${i}~0")
+for i in range(0, 3):
+    url = f"https://boston.craigslist.org/search/boston-ma/cta#search=1~gallery~{i}~0"
+    driver.get(url)
 
     # await for the page to load
     wait = WebDriverWait(driver, 10)
@@ -35,10 +42,16 @@ for i in range(1, 10):
         href = a.get("href")
         href_list.append(href)
 
+    done = []
+
     # Only keep the first 5 href values to speed up the demo
-    href_list = href_list[:5]
+    href_list = href_list[5:15]
 
     for href in href_list:
+        if href in done:
+            continue
+            
+        done.append(href)
         # Navigate to the page
         driver.get(href)
 
@@ -56,6 +69,7 @@ for i in range(1, 10):
         name = atr[0].find("span").text
         attributes = {}
 
+        
         # Second div contains the attributes of the car
         for i in range(1, len(atr[1])):
             try:
@@ -64,15 +78,24 @@ for i in range(1, 10):
                 # remove after :
                 key = atr[1].find_all("span")[i].text
                 key = key.split(":")[0]
+                
+                if key not in keys:
+                    keys.append(key)
+
                 value = atr[1].find_all("b")[i].text
                 attributes[key] = value
             except:
                 pass
-
-        data.append({"name": name, "attributes": attributes})
-
-with open("data.json", "w") as f:
-    f.write(json.dumps(data, indent=4))
+        
+        line = ""
+        # add the name of the car
+        line += name + ","
+        for col in columns:
+            if col in attributes:
+                line += attributes[col]
+            line += ","
+        
+        print(line)
 
 # Close the web driver
 driver.quit()
