@@ -1,1 +1,3 @@
 images/
+venv/
+geckodriver.log
