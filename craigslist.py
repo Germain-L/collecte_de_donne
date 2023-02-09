@@ -44,7 +44,7 @@ for i in range(0, 3):
 
     done = []
 
-    # Only keep the first 5 href values to speed up the demo
+    # Only keep the some of the href values to speed up the process
     href_list = href_list[5:15]
 
     for href in href_list:
